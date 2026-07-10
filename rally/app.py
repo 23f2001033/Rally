@@ -81,6 +81,12 @@ def _handle_fill_request(client, conn, text: str, user_id: str, say,
 
 def _route_and_handle(client, conn, text: str, user_id: str, say, set_status=None,
                       channel_id=None, thread_ts=None, action_token=None) -> None:
+    if re.search(r"reset (the )?demo", text, re.I) and config.SIMULATION:
+        n = db.reset_demo_state(conn)
+        say(text=f":broom: Demo board reset — {n} volunteers on the roster, no shifts, "
+                 "all ask-counters cleared. Ready for a fresh run!")
+        return
+
     sim_match = re.search(r"simulate a? ?cancell?ation", text, re.I)
     if sim_match and config.SIMULATION:
         row = conn.execute(

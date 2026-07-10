@@ -8,7 +8,7 @@
 ---
 
 ## Elevator pitch (≤200 chars)
-Nonprofits live in Slack but coordinate volunteers by phone tree and spreadsheet. Rally is the agent that fills shifts by skill, auto-rescues cancellations, and answers volunteer questions with sources.
+Nonprofits live in Slack but coordinate volunteers by phone tree and spreadsheet. Rally fills shifts by skill, auto-rescues cancellations, and answers volunteer questions with sources.
 
 ---
 
@@ -60,8 +60,9 @@ Recurring shifts and calendar sync, a Slack Marketplace listing, multi-org suppo
 Rally targets nonprofit operations — an explicitly named theme of the Agent for Good track. Volunteer coordinators are among the most time-starved people in the social sector; the hours Rally gives back (6–8 per week, per coordinator) convert directly into mission delivery, and its automated confirm-and-remind loop is documented to roughly halve volunteer no-shows, meaning food banks, shelters, and community programs actually get the help they scheduled. Because Slack is free for nonprofits under 250 members and Rally adds no new logins for volunteers, the barrier to adoption is near zero. The impact ledger doubles as grant-reporting evidence, easing the administrative burden that small nonprofits carry. Rally makes the tool nonprofits already have — Slack — into their volunteer HQ.
 
 ## Testing access for judges (put in the submission's sandbox/access field)
-- Sandbox workspace URL: **<paste your rally sandbox URL>**
+- Sandbox workspace URL: **https://e0bgjerk6mu-qwdf3y7l.slack.com/** (workspace name: "rally prod")
 - Access granted to: `slackhack@salesforce.com` and `testing@devpost.com`
 - To try it: open Rally from the top-bar agent entry point (or DM it) and use a suggested prompt. Simulation mode is ON — send *"I need 6 volunteers for the Saturday food drive, 9am-1pm, 2 with driver's licenses and 1 Spanish speaker"*, watch it fill, then send *"simulate a cancellation"* to see the rescue. Ask *"Where do I park at the warehouse?"* for a cited answer.
+- Tip: send *"reset the demo"* anytime to clear the shift board back to a fresh state (roster stays; useful if previous testers filled the same time slots).
 - Demo video: **<paste YouTube link>**
-- Code: **<paste GitHub link>**
+- Code: **https://github.com/23f2001033/Rally**

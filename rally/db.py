@@ -143,3 +143,16 @@ def due_jobs(conn: sqlite3.Connection) -> list[dict]:
 def finish_job(conn: sqlite3.Connection, job_id: int) -> None:
     conn.execute("UPDATE jobs SET done = 1 WHERE id = ?", (job_id,))
     conn.commit()
+
+
+def reset_demo_state(conn: sqlite3.Connection) -> int:
+    """Wipe shifts/assignments/jobs/hours and clear volunteer ask-counters, keeping the
+    roster. Repeated demo runs at the same time slot otherwise exhaust the pool via
+    double-booking exclusions and monthly ask caps. Returns roster size."""
+    for table in ("assignments", "shifts", "jobs", "hours_ledger", "intake_sessions"):
+        conn.execute(f"DELETE FROM {table}")
+    conn.execute(
+        "UPDATE volunteers SET last_asked_at = NULL, asks_this_month = 0, active = 1"
+    )
+    conn.commit()
+    return conn.execute("SELECT COUNT(*) c FROM volunteers").fetchone()["c"]
