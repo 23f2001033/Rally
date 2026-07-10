@@ -64,5 +64,5 @@ Rally targets nonprofit operations — an explicitly named theme of the Agent fo
 - Access granted to: `slackhack@salesforce.com` and `testing@devpost.com`
 - To try it: open Rally from the top-bar agent entry point (or DM it) and use a suggested prompt. Simulation mode is ON — send *"I need 6 volunteers for the Saturday food drive, 9am-1pm, 2 with driver's licenses and 1 Spanish speaker"*, watch it fill, then send *"simulate a cancellation"* to see the rescue. Ask *"Where do I park at the warehouse?"* for a cited answer.
 - Tip: send *"reset the demo"* anytime to clear the shift board back to a fresh state (roster stays; useful if previous testers filled the same time slots).
-- Demo video: **<paste YouTube link>**
+- Demo video: **https://youtu.be/hfO7c05DK6U**
 - Code: **https://github.com/23f2001033/Rally**

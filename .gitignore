@@ -5,3 +5,5 @@ __pycache__/
 rally.db
 rally.db-*
 .pytest_cache/
+*.mp4
+*.mp3
