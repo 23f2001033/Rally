@@ -7,6 +7,7 @@ intake turn = 1 fast call, FAQ = 1 smart call, negotiation = 1 smart call.
 Outreach, reminders, status updates: zero LLM calls.
 """
 import json
+import re
 import time
 from datetime import datetime
 
@@ -132,9 +133,42 @@ def intake_turn(state: dict, message: str) -> dict:
 
 
 FAQ_SYSTEM = """You answer a volunteer's logistics question using ONLY the search results
-provided. Cite sources inline as <permalink|source> Slack links using ONLY permalinks that
+provided. Write the answer itself as plain text — NEVER put answer content inside a link
+label. Then cite at the end like: (source: <permalink|#channel>) using ONLY permalinks that
 appear in the results — never invent links. If the results don't contain the answer, say you
 couldn't find it and that you've flagged it for a coordinator. Be brief and warm."""
+
+
+def _norm_url(u: str) -> str:
+    return u.split("?")[0].rstrip("/").lower()
+
+
+def enforce_citation_whitelist(answer: str, allowed: set[str]) -> str:
+    """Citation whitelist (RALLY-REVIEW.md, carried from REVIEW.md D7): a link may only
+    survive if it appeared in the actual search results. Disallowed links keep their label
+    text (content is never lost) but lose the URL."""
+    allowed_n = {_norm_url(u) for u in allowed}
+    out, i = [], 0
+    while i < len(answer):
+        if answer.startswith("<http", i):
+            end = answer.find(">", i)
+            if end == -1:
+                out.append(answer[i:])
+                break
+            token = answer[i + 1 : end]
+            url, _, label = token.partition("|")
+            if _norm_url(url) in allowed_n:
+                out.append(answer[i : end + 1])
+            elif label:
+                out.append(label)  # drop the bad URL, keep the human-readable text
+            i = end + 1
+        else:
+            out.append(answer[i])
+            i += 1
+    return "".join(out)
+
+
+_RAW_URL = re.compile(r"(?<!<)https?://\S+")
 
 
 def faq_answer(question: str, search_results: list[dict]) -> str:
@@ -142,20 +176,13 @@ def faq_answer(question: str, search_results: list[dict]) -> str:
     context = json.dumps(search_results[:8], indent=1)
     answer = _complete(config.MODEL_SMART, FAQ_SYSTEM,
                        f"Question: {question}\n\nSearch results:\n{context}", 600)
-    # Citation whitelist (RALLY-REVIEW.md, carried from REVIEW.md D7): strip any link
-    # that wasn't in the actual results.
-    out, i = [], 0
-    while i < len(answer):
-        if answer.startswith("<http", i):
-            end = answer.find(">", i)
-            link = answer[i + 1 : end].split("|")[0]
-            if end != -1 and link in allowed:
-                out.append(answer[i : end + 1])
-            i = end + 1 if end != -1 else len(answer)
-        else:
-            out.append(answer[i])
-            i += 1
-    return "".join(out)
+    answer = enforce_citation_whitelist(answer, allowed)
+    # Raw (non-<>) URLs bypass the token check above — apply the same whitelist to them.
+    allowed_n = {_norm_url(u) for u in allowed}
+    return _RAW_URL.sub(
+        lambda m: m.group(0) if _norm_url(m.group(0).rstrip(").,")) in allowed_n else "[link removed]",
+        answer,
+    )
 
 
 NEGOTIATE_SYSTEM = """You are Rally, a volunteer-coordination agent. A shift cannot be filled
