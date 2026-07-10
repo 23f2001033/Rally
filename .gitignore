@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+rally.db
+rally.db-*
+.pytest_cache/

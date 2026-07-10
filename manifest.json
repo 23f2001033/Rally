@@ -1,0 +1,78 @@
+{
+    "display_information": {
+        "name": "Rally",
+        "description": "The volunteer coordination agent for nonprofits. Fills shifts, rescues dropouts, answers questions.",
+        "background_color": "#2e7d32",
+        "long_description": "Rally turns your Slack workspace into a volunteer HQ. Coordinators ask in plain language ('I need 6 volunteers Saturday 9am, 2 with driver's licenses') and Rally matches your opt-in roster by skill, certification and availability, reaches out with one-tap Accept/Decline, tracks confirmations on a live status card, and automatically back-fills when someone cancels. Volunteers join by DMing Rally a short intake chat. Questions like 'where do I park?' get cited answers from your workspace history via Slack's Real-Time Search API. Shift hours flow into a grant-ready impact ledger, and everything is queryable from any MCP client."
+    },
+    "features": {
+        "app_home": {
+            "home_tab_enabled": true,
+            "messages_tab_enabled": true,
+            "messages_tab_read_only_enabled": false
+        },
+        "bot_user": {
+            "display_name": "Rally",
+            "always_online": true
+        },
+        "assistant_view": {
+            "assistant_description": "Volunteer coordination agent: fill shifts, join the roster, ask logistics questions.",
+            "suggested_prompts": [
+                {
+                    "title": "Fill a shift",
+                    "message": "I need 6 volunteers for the Saturday food drive, 9am-1pm at the warehouse. At least 2 with driver's licenses and 1 Spanish speaker."
+                },
+                {
+                    "title": "Join the roster",
+                    "message": "I'd like to sign up as a volunteer."
+                },
+                {
+                    "title": "Shift status",
+                    "message": "How's coverage looking for our upcoming shifts?"
+                },
+                {
+                    "title": "Ask a question",
+                    "message": "Where do I park at the warehouse?"
+                }
+            ]
+        }
+    },
+    "oauth_config": {
+        "scopes": {
+            "bot": [
+                "app_mentions:read",
+                "assistant:write",
+                "canvases:read",
+                "canvases:write",
+                "channels:history",
+                "channels:read",
+                "chat:write",
+                "im:history",
+                "im:read",
+                "im:write",
+                "reactions:write",
+                "search:read.public",
+                "search:read.files",
+                "search:read.users",
+                "users:read"
+            ]
+        }
+    },
+    "settings": {
+        "event_subscriptions": {
+            "bot_events": [
+                "app_home_opened",
+                "app_mention",
+                "assistant_thread_started",
+                "assistant_thread_context_changed",
+                "message.im"
+            ]
+        },
+        "interactivity": {
+            "is_enabled": true
+        },
+        "org_deploy_enabled": false,
+        "socket_mode_enabled": true,
+        "token_rotation_enabled": false
+    }
+}

@@ -1,0 +1,22 @@
+# Fly.io config for Rally. Socket Mode = no inbound ports, runs as an always-on worker.
+app = "rally-volunteer-agent"
+primary_region = "iad"
+
+[build]
+
+[env]
+  RALLY_SIMULATION = "1"
+  RALLY_DB_PATH = "/data/rally.db"
+
+# Persist SQLite across deploys/restarts.
+[mounts]
+  source = "rally_data"
+  destination = "/data"
+
+# One always-on machine; never scale to zero (judges test at random times Jul 14-Aug 6).
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"
+
+[deploy]
+  strategy = "immediate"

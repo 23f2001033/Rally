@@ -1,0 +1,86 @@
+<svg width="100%" viewBox="0 0 680 524" role="img" xmlns="http://www.w3.org/2000/svg" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+  <title>Rally architecture</title>
+  <desc>Slack workspace triggers a Bolt for Python agent that uses Gemini, SQLite, the Slack Real-Time Search API, and exposes an MCP server to Claude Desktop.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#888780"/>
+    </marker>
+  </defs>
+
+  <text x="40" y="28" font-size="19" font-weight="700" fill="#2C2C2A">Rally — how it works</text>
+  <text x="40" y="47" font-size="11.5" fill="#5F5E5A">On-demand volunteer coordination agent · uses all three qualifying technologies</text>
+
+  <!-- Tier 1: Slack surface -->
+  <rect x="210" y="64" width="260" height="58" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="1.5"/>
+  <text x="340" y="88" text-anchor="middle" font-size="13.5" font-weight="700" fill="#3C3489">Slack Workspace (sandbox)</text>
+  <text x="340" y="106" text-anchor="middle" font-size="10.5" fill="#534AB7">assistant thread · DM · buttons · shortcuts</text>
+
+  <line x1="340" y1="122" x2="340" y2="150" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="348" y="140" font-size="10" fill="#5F5E5A" font-style="italic">on-demand only — no passive reads</text>
+
+  <!-- Tier 2: Rally core -->
+  <rect x="70" y="152" width="540" height="128" rx="10" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.5"/>
+  <text x="90" y="174" font-size="13" font-weight="700" fill="#085041">Rally — Bolt for Python · Socket Mode</text>
+
+  <g font-size="12" font-weight="700">
+    <rect x="90" y="186" width="116" height="82" rx="7" fill="#ffffff" stroke="#0F6E56" stroke-width="1.2"/>
+    <text x="148" y="222" text-anchor="middle" fill="#085041">Router</text>
+    <text x="148" y="240" text-anchor="middle" font-size="10" font-weight="400" fill="#0F6E56">intent routing</text>
+
+    <rect x="218" y="186" width="116" height="82" rx="7" fill="#ffffff" stroke="#0F6E56" stroke-width="1.2"/>
+    <text x="276" y="222" text-anchor="middle" fill="#085041">Matching</text>
+    <text x="276" y="240" text-anchor="middle" font-size="10" font-weight="400" fill="#0F6E56">pure SQL · no LLM</text>
+
+    <rect x="346" y="186" width="116" height="82" rx="7" fill="#ffffff" stroke="#0F6E56" stroke-width="1.2"/>
+    <text x="404" y="222" text-anchor="middle" fill="#085041">Outreach</text>
+    <text x="404" y="240" text-anchor="middle" font-size="10" font-weight="400" fill="#0F6E56">fill + rescue loop</text>
+
+    <rect x="474" y="186" width="116" height="82" rx="7" fill="#ffffff" stroke="#0F6E56" stroke-width="1.2"/>
+    <text x="532" y="222" text-anchor="middle" fill="#085041">Scheduler</text>
+    <text x="532" y="240" text-anchor="middle" font-size="10" font-weight="400" fill="#0F6E56">persisted jobs</text>
+  </g>
+
+  <!-- Tier 2 -> Tier 3 arrows -->
+  <line x1="125" y1="280" x2="125" y2="328" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="340" y1="280" x2="340" y2="328" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="555" y1="280" x2="555" y2="328" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Tier 3: services -->
+  <rect x="40" y="328" width="170" height="60" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="1.5"/>
+  <text x="125" y="353" text-anchor="middle" font-size="13" font-weight="700" fill="#444441">Gemini (free tier)</text>
+  <text x="125" y="371" text-anchor="middle" font-size="10.5" fill="#5F5E5A">tiered + auto-fallback</text>
+
+  <rect x="255" y="328" width="170" height="60" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="1.5"/>
+  <text x="340" y="353" text-anchor="middle" font-size="13" font-weight="700" fill="#444441">SQLite store</text>
+  <text x="340" y="371" text-anchor="middle" font-size="10.5" fill="#5F5E5A">roster · shifts · hours</text>
+
+  <rect x="470" y="328" width="170" height="60" rx="8" fill="#FAECE7" stroke="#993C1D" stroke-width="1.5"/>
+  <text x="555" y="353" text-anchor="middle" font-size="13" font-weight="700" fill="#712B13">Real-Time Search</text>
+  <text x="555" y="371" text-anchor="middle" font-size="10.5" fill="#993C1D">cited FAQ answers</text>
+
+  <!-- Tier 3 -> Tier 4 -->
+  <line x1="340" y1="388" x2="340" y2="414" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Tier 4: MCP path -->
+  <rect x="255" y="414" width="170" height="58" rx="8" fill="#FAECE7" stroke="#993C1D" stroke-width="1.5"/>
+  <text x="340" y="438" text-anchor="middle" font-size="13" font-weight="700" fill="#712B13">MCP Server</text>
+  <text x="340" y="456" text-anchor="middle" font-size="10.5" fill="#993C1D">roster + shift tools</text>
+
+  <line x1="425" y1="443" x2="470" y2="443" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="470" y="414" width="170" height="58" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="1.5"/>
+  <text x="555" y="438" text-anchor="middle" font-size="13" font-weight="700" fill="#3C3489">Claude Desktop</text>
+  <text x="555" y="456" text-anchor="middle" font-size="10.5" fill="#534AB7">external MCP client</text>
+
+  <!-- Legend -->
+  <g font-size="10" fill="#5F5E5A">
+    <rect x="40" y="496" width="12" height="12" rx="3" fill="#FAECE7" stroke="#993C1D"/>
+    <text x="57" y="506">Slack qualifying tech</text>
+    <rect x="205" y="496" width="12" height="12" rx="3" fill="#E1F5EE" stroke="#0F6E56"/>
+    <text x="222" y="506">Rally agent</text>
+    <rect x="315" y="496" width="12" height="12" rx="3" fill="#EEEDFE" stroke="#534AB7"/>
+    <text x="332" y="506">Slack / AI surface</text>
+    <rect x="470" y="496" width="12" height="12" rx="3" fill="#F1EFE8" stroke="#5F5E5A"/>
+    <text x="487" y="506">Infrastructure</text>
+  </g>
+</svg>
