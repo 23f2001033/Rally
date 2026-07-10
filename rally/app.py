@@ -4,6 +4,7 @@
 Run: python -m rally.app
 """
 import re
+import time
 from datetime import datetime, timedelta, timezone
 
 from slack_bolt import App, Assistant, Say, SetStatus, SetSuggestedPrompts
@@ -275,6 +276,14 @@ def _seed_roster_if_empty() -> None:
 
 
 def main() -> None:
+    missing = config.missing_required()
+    if missing:
+        # Fail fast with ONE clear line (not a traceback loop) so host logs are diagnostic.
+        # The sleep avoids a tight restart loop that burns free-tier credits.
+        print("FATAL: missing required environment variables: " + ", ".join(missing))
+        print("Set these in your host's Variables/Secrets (exact names, no quotes), then redeploy.")
+        time.sleep(30)
+        raise SystemExit(1)
     db.connect()  # apply schema
     _seed_roster_if_empty()
     scheduler.start(app.client)
